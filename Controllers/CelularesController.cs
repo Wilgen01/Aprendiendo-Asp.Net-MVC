@@ -12,10 +12,17 @@ namespace AprendiendoAsp.Net.Controllers
         {
             this._context = context;
         }
+
         public async Task<IActionResult> Index()
         {
-            
-            return View(await _context.Celulars.Include(b => b.Marca).ToListAsync());
+            var celulares = _context.Celulars.Include(b => b.Marca);
+            return View(await celulares.ToListAsync());
         }
+
+        public IActionResult Crear()
+        {
+            return View();
+        }
+
     }
 }
