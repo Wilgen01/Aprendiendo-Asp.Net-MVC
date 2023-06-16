@@ -17,5 +17,10 @@ namespace AprendiendoAsp.Net.Controllers
             var model = await _context.Marcas.ToListAsync();
             return View(model);
         }
+
+        public IActionResult Crear()
+        {
+            return View();
+        }
     }
 }
