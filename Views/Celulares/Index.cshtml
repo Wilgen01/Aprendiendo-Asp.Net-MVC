@@ -1,0 +1,39 @@
+﻿@model List<Celulare>
+
+@{
+    ViewData["Title"] = "Celulares";
+}
+
+<h1>Celulares</h1>
+
+<table class="table"> 
+    <thead>
+        <tr>
+            <th>
+                Modelo
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                Marca
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var celular in Model)
+        {
+            <tr>
+                <td>
+                    @celular.Modelo
+                </td>
+                <td>
+                    @celular.Precio
+                </td>
+                <td>
+                    @celular.IdMarca
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
