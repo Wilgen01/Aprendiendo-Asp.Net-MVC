@@ -15,7 +15,7 @@ public partial class EjercicioAspNetContext : DbContext
     {
     }
 
-    public virtual DbSet<Celulare> Celulares { get; set; }
+    public virtual DbSet<Celular> Celulars { get; set; }
 
     public virtual DbSet<Marca> Marcas { get; set; }
 
@@ -25,15 +25,19 @@ public partial class EjercicioAspNetContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Celulare>(entity =>
+        modelBuilder.Entity<Celular>(entity =>
         {
+            entity.HasKey(e => e.CelularId).HasName("PK_Celulares");
+
+            entity.ToTable("Celular");
+
             entity.Property(e => e.Modelo)
                 .HasMaxLength(60)
                 .IsUnicode(false);
             entity.Property(e => e.Precio).HasColumnType("money");
 
-            entity.HasOne(d => d.IdMarcaNavigation).WithMany(p => p.Celulares)
-                .HasForeignKey(d => d.IdMarca)
+            entity.HasOne(d => d.Marca).WithMany(p => p.Celulars)
+                .HasForeignKey(d => d.MarcaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Celulares_Marca");
         });

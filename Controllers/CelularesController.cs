@@ -14,7 +14,8 @@ namespace AprendiendoAsp.Net.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Celulares.ToListAsync());
+            
+            return View(await _context.Celulars.Include(b => b.Marca).ToListAsync());
         }
     }
 }

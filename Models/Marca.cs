@@ -5,11 +5,11 @@ namespace AprendiendoAsp.Net.Models;
 
 public partial class Marca
 {
-    public int Id { get; set; }
+    public int MarcaId { get; set; }
 
     public string Nombre { get; set; } = null!;
 
     public string Descripcion { get; set; } = null!;
 
-    public virtual ICollection<Celulare> Celulares { get; set; } = new List<Celulare>();
+    public virtual ICollection<Celular> Celulars { get; set; } = new List<Celular>();
 }

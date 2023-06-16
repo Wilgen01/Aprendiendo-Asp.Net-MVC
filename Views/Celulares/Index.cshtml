@@ -1,4 +1,4 @@
-﻿@model List<Celulare>
+﻿@model List<Celular>
 
 @{
     ViewData["Title"] = "Celulares";
@@ -31,7 +31,7 @@
                     @celular.Precio
                 </td>
                 <td>
-                    @celular.IdMarca
+                    @celular.Marca.Nombre
                 </td>
             </tr>
         }
