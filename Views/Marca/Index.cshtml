@@ -1,0 +1,32 @@
+﻿@model List<Marca>
+@{
+    ViewData["Title"] = "Marcas";
+}
+
+<h1>Marcas</h1>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var marca in Model)
+        {
+            <tr>
+                <td>
+                    @marca.Nombre
+                </td>
+                <td>
+                    @marca.Descripcion
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
