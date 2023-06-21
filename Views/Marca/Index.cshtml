@@ -15,10 +15,13 @@
             <th>
                 Descripcion
             </th>
+            <th>
+                Acciones
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach(var marca in Model)
+        @foreach (var marca in Model)
         {
             <tr>
                 <td>
@@ -26,6 +29,10 @@
                 </td>
                 <td>
                     @marca.Descripcion
+                </td>
+                <td>
+                    <a class="btn btn-secondary">Editar</a>
+                    <a class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>
         }
