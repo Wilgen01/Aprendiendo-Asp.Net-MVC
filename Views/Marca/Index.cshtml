@@ -32,9 +32,52 @@
                 </td>
                 <td>
                     <a asp-action="Editar" asp-route-id="@marca.MarcaId" class="btn btn-secondary">Editar</a>
-                    <a class="btn btn-danger">Eliminar</a>
+                    <a data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@marca.MarcaId" data-marca="@marca.Nombre" class="btn btn-danger btn-eliminar">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Eliminar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea eliminar el item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" id="confirmar-eliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.btn-eliminar').click(function (){
+                let id = $(this).data("id");
+                let marca = $(this).data("marca");
+                $(".modal-body").text(`¿Está seguro que desea eliminar la marca ${marca}?`)
+                $("#confirmar-eliminar").data("id", id)
+            });
+
+            $("#confirmar-eliminar").click(function (){
+                let id = $(this).data("id");
+                let url = "/Marca/Eliminar/" + id;
+                $.post(url, function (){
+                    window.location.href = "/Marca";
+                });
+            })
+
+
+        });
+    </script>
+}

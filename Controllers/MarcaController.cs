@@ -2,6 +2,7 @@
 using AprendiendoAsp.Net.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace AprendiendoAsp.Net.Controllers
 {
@@ -79,7 +80,7 @@ namespace AprendiendoAsp.Net.Controllers
                 return View(marca);
             }
 
-            var existeMarca = await _context.Marcas.AnyAsync(m => m.Nombre.Equals(marca.Nombre));
+            var existeMarca = await _context.Marcas.AnyAsync(m => m.Nombre.Equals(marca.Nombre) && m.MarcaId != id);
 
             if (existeMarca)
             {
@@ -97,6 +98,24 @@ namespace AprendiendoAsp.Net.Controllers
 
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            var existeMarca = await _context.Marcas.AnyAsync(m => m.MarcaId.Equals(id));
+
+            if (!existeMarca)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var editarMarca = await _context.Marcas.FindAsync(id);
+            _context.Marcas.Remove(editarMarca);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
         }
     }
 }
