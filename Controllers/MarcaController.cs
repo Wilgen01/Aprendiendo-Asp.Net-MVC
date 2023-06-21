@@ -32,12 +32,14 @@ namespace AprendiendoAsp.Net.Controllers
                 return View(marca);
             }
 
-            var existeMarca = await _context.Marcas.Where(b => b.Nombre == marca.Nombre).FirstOrDefaultAsync();
+            var existeMarca = await _context.Marcas.AnyAsync(m => m.Nombre == marca.Nombre);
 
-            if (existeMarca is not null)
-            {
-                return Json("Esta marca ya existe en la base de datos");
+            if (existeMarca)
+            {   
+                ModelState.AddModelError(nameof(marca.Nombre), $"La marca {marca.Nombre} ya se encuentra registrada");
+                return View(marca);
             }
+
 
             var model = new Marca()
             {
