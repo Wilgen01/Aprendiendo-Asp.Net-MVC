@@ -34,6 +34,7 @@ namespace AprendiendoAsp.Net.Controllers
 
             var marcaViewModel = new MarcaViewModel()
             {
+                MarcaId = marca.MarcaId,
                 Nombre = marca.Nombre,
                 Descripcion = marca.Descripcion,
             };
@@ -68,6 +69,34 @@ namespace AprendiendoAsp.Net.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(int id, MarcaViewModel marca)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(marca);
+            }
+
+            var existeMarca = await _context.Marcas.AnyAsync(m => m.Nombre.Equals(marca.Nombre));
+
+            if (existeMarca)
+            {
+                ModelState.AddModelError(nameof(marca.Nombre), $"La marca {marca.Nombre} ya se encuentra registrada");
+                return View(marca);
+            }
+
+
+            var editarMarca = await _context.Marcas.FindAsync(id);
+            
+            editarMarca.Nombre = marca.Nombre;
+            editarMarca.Descripcion = marca.Descripcion;
+
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("Index");
         }
     }
 }
