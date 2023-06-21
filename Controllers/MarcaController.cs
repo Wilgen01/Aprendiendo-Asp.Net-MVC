@@ -24,6 +24,11 @@ namespace AprendiendoAsp.Net.Controllers
             return View();
         }
 
+        public IActionResult Editar()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Crear(MarcaViewModel marca)
         {
