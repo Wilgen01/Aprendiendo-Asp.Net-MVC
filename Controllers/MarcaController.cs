@@ -27,20 +27,27 @@ namespace AprendiendoAsp.Net.Controllers
         [HttpPost]
         public async Task<IActionResult> Crear(MarcaViewModel marca)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var model = new Marca()
-                {
-                    Nombre = marca.Nombre,
-                    Descripcion = marca.Descripcion,
-                };
-
-                _context.Marcas.Add(model);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return View(marca);
             }
 
-            return View(marca);
+            var existeMarca = await _context.Marcas.Where(b => b.Nombre == marca.Nombre).FirstOrDefaultAsync();
+
+            if (existeMarca is not null)
+            {
+                return Json("Esta marca ya existe en la base de datos");
+            }
+
+            var model = new Marca()
+            {
+                Nombre = marca.Nombre,
+                Descripcion = marca.Descripcion,
+            };
+
+            _context.Marcas.Add(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
 
         }
     }
