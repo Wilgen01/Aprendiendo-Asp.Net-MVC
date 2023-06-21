@@ -24,9 +24,21 @@ namespace AprendiendoAsp.Net.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public async Task<IActionResult> Editar(int id)
         {
-            return View();
+            var marca = await _context.Marcas.FindAsync(id);
+            if (marca is null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var marcaViewModel = new MarcaViewModel()
+            {
+                Nombre = marca.Nombre,
+                Descripcion = marca.Descripcion,
+            };
+
+            return View(marcaViewModel);
         }
 
         [HttpPost]
